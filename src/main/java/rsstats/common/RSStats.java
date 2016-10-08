@@ -14,11 +14,13 @@ public class RSStats
     public static final String MODNAME = "RS Stats";
     public static final String VERSION = "0.0.1a";
     
+    public static final int GUI = 0; // Код GUI окна, кажется
+    
     @Mod.Instance(MODID)
     public static RSStats instance = new RSStats();
     
-    //@SidedProxy(clientSide = "rsstats.client.ClientProxy", serverSide = "rsstats.server.ServerProxy")
-    //public static CommonProxy proxy;
+    @SidedProxy(clientSide = "rsstats.client.ClientProxy", serverSide = "rsstats.common.СommonProxy")
+    public static CommonProxy proxy;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -28,6 +30,7 @@ public class RSStats
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+        proxy.registerKeyBindings();  	
 	//this.proxy.init(event);
     }
     
