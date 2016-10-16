@@ -11,6 +11,8 @@ import net.minecraft.client.settings.KeyBinding;
 
 
 import org.lwjgl.input.Keyboard;
+import rsstats.common.network.PacketHandler;
+import rsstats.common.network.PacketOpenRSStatsInventory;
 
 
 public class KeyHandler {
@@ -22,15 +24,15 @@ public class KeyHandler {
 		 ClientRegistry.registerKeyBinding(key);
 	}
 
-	/*@SideOnly(Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void playerTick(PlayerTickEvent event) {
 		if (event.side == Side.SERVER) return;
 		if (event.phase == Phase.START ) {
 			if (key.isPressed() && FMLClientHandler.instance().getClient().inGameHasFocus) {
-					//PacketHandler.INSTANCE.sendToServer(new PacketOpenBaublesInventory(event.player));
-			}
+					PacketHandler.INSTANCE.sendToServer(new PacketOpenRSStatsInventory(event.player));
+                        }
 		}
-	}*/
+	}
 }
 

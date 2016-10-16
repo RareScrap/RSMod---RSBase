@@ -6,6 +6,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid = RSStats.MODID, version = RSStats.VERSION)
 public class RSStats
@@ -30,6 +31,7 @@ public class RSStats
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.registerKeyBindings();  	
 	//this.proxy.init(event);
     }
@@ -39,5 +41,3 @@ public class RSStats
         //this.proxy.postInit(event);
     }
 }
-
-//TODO: Добавить прокси

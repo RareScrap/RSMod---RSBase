@@ -50,7 +50,6 @@ public class StatsAndInvTabGui extends InventoryEffectRenderer {
     	try {
             //((ContainerPlayerExpanded)inventorySlots).baubles.blockEvents=false;
         } catch (Exception e) {	}
-        //this.updateActivePotionEffects();
     }
     
     
