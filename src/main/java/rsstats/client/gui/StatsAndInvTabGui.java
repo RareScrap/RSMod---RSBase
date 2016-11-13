@@ -10,6 +10,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+import rsstats.common.RSStats;
+import net.minecraft.client.renderer.Tessellator;  //!!
 import rsstats.common.container.StatsAndInvContainer;
 
 /**
@@ -55,23 +58,30 @@ public class StatsAndInvTabGui extends InventoryEffectRenderer {
     
     @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
-        //GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(background);
         int k = this.guiLeft;
         int l = this.guiTop;
-        this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+        //this.drawTexturedModalRect(0, 0, 0, 0, this.xSize, this.ySize);
         
-        for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV(k + 0, l + height, zLevel, 0,1);
+        tessellator.addVertexWithUV(k + width, l + height, zLevel, 1, 1);
+        tessellator.addVertexWithUV(k + width, l + 0, zLevel, 1,0);
+        tessellator.addVertexWithUV(k + 0, l + 0, zLevel, 0, 0);
+        tessellator.draw();
+        
+        /*for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)
         {
             Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);
             if (slot.getHasStack() && slot.getSlotStackLimit()==1)
             {
             	this.drawTexturedModalRect(k+slot.xDisplayPosition, l+slot.yDisplayPosition, 200, 0, 16, 16);
             }
-        }
+        }*/
         
         //drawPlayerModel(k + 51, l + 75, 30, (float)(k + 51) - this.xSizeFloat, (float)(l + 75 - 50) - this.ySizeFloat, this.mc.thePlayer);
     
     }
-    
 }

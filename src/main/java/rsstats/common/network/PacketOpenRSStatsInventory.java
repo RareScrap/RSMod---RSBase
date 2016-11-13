@@ -21,7 +21,7 @@ public class PacketOpenRSStatsInventory implements IMessage, IMessageHandler<Pac
 
 	@Override
 	public IMessage onMessage(PacketOpenRSStatsInventory message, MessageContext ctx) {
-            //ctx.getServerHandler().playerEntity.openGui(RSStats.instance, RSStats.GUI, ctx.getServerHandler().playerEntity.worldObj, (int)ctx.getServerHandler().playerEntity.posX, (int)ctx.getServerHandler().playerEntity.posY, (int)ctx.getServerHandler().playerEntity.posZ);
+            ctx.getServerHandler().playerEntity.openGui(RSStats.instance, RSStats.GUI, ctx.getServerHandler().playerEntity.worldObj, (int)ctx.getServerHandler().playerEntity.posX, (int)ctx.getServerHandler().playerEntity.posY, (int)ctx.getServerHandler().playerEntity.posZ);
             //ctx.getServerHandler().playerEntity.ope
             return null;
 	}

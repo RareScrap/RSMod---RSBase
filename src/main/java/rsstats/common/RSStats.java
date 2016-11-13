@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import rsstats.common.network.PacketHandler;
 
 @Mod(modid = RSStats.MODID, version = RSStats.VERSION)
 public class RSStats
@@ -25,6 +26,7 @@ public class RSStats
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        PacketHandler.init();
         //this.proxy.preInit(event);
     }
     
