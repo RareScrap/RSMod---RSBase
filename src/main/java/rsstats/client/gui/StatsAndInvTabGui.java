@@ -21,7 +21,7 @@ import rsstats.common.container.StatsAndInvContainer;
  */
 public class StatsAndInvTabGui extends InventoryEffectRenderer {
     public static final ResourceLocation background = 
-			new ResourceLocation("RSStats","textures/gui/StatsAndInvTab.png");
+			new ResourceLocation("rsstats","textures/gui/StatsAndInvTab1.png");
     
     /**
      * x size of the inventory window in pixels. Defined as  float, passed as int
@@ -62,15 +62,15 @@ public class StatsAndInvTabGui extends InventoryEffectRenderer {
         this.mc.getTextureManager().bindTexture(background);
         int k = this.guiLeft;
         int l = this.guiTop;
-        //this.drawTexturedModalRect(0, 0, 0, 0, this.xSize, this.ySize);
+        this.drawTexturedModalRect(k, l, 0, 0, 512, 256);
         
-        Tessellator tessellator = Tessellator.instance;
+        /*Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV(k + 0, l + height, zLevel, 0,1);
         tessellator.addVertexWithUV(k + width, l + height, zLevel, 1, 1);
         tessellator.addVertexWithUV(k + width, l + 0, zLevel, 1,0);
         tessellator.addVertexWithUV(k + 0, l + 0, zLevel, 0, 0);
-        tessellator.draw();
+        tessellator.draw();*/
         
         /*for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)
         {
