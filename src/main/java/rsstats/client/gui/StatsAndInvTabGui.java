@@ -21,7 +21,7 @@ import rsstats.common.container.StatsAndInvContainer;
  */
 public class StatsAndInvTabGui extends InventoryEffectRenderer {
     public static final ResourceLocation background = 
-			new ResourceLocation("rsstats","textures/gui/StatsAndInvTab1.png");
+			new ResourceLocation("rsstats","textures/gui/StatsAndInvTab.png");
     
     /**
      * x size of the inventory window in pixels. Defined as  float, passed as int
@@ -55,6 +55,13 @@ public class StatsAndInvTabGui extends InventoryEffectRenderer {
         } catch (Exception e) {	}
     }
     
+    @Override
+    public void drawScreen(int par1, int par2, float par3)
+    {
+        super.drawScreen(par1, par2, par3);
+        this.xSizeFloat = (float)par1;
+        this.ySizeFloat = (float)par2;
+    }
     
     @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
@@ -62,7 +69,21 @@ public class StatsAndInvTabGui extends InventoryEffectRenderer {
         this.mc.getTextureManager().bindTexture(background);
         int k = this.guiLeft;
         int l = this.guiTop;
-        this.drawTexturedModalRect(k, l, 0, 0, 512, 256);
+        /*
+        this.xSize = 177;
+        this.ySize = 106;
+        */
+        this.drawTexturedModalRect(0, 0, 0, 0, (int)this.xSizeFloat, (int)this.ySizeFloat);
+        //this.drawTexturedModalRect(0, 0, 200, 0, 16, 16);
+        
+        for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)
+        {
+            Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);
+            if (slot.getHasStack() && slot.getSlotStackLimit()==1)
+            {
+            	this.drawTexturedModalRect(k+slot.xDisplayPosition, l+slot.yDisplayPosition, 200, 0, 16, 16);
+            }
+        }
         
         /*Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
