@@ -12,7 +12,7 @@ import net.minecraft.inventory.Container;
  *
  * @author rares
  */
-public class StatsAndInvContainer extends Container {
+public class MainMenuContainer extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {

@@ -13,15 +13,15 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import rsstats.common.RSStats;
 import net.minecraft.client.renderer.Tessellator;  //!!
-import rsstats.common.container.StatsAndInvContainer;
+import rsstats.common.container.MainMenuContainer;
 
 /**
  *
  * @author rares
  */
-public class StatsAndInvTabGui extends InventoryEffectRenderer {
+public class MainMenuGUI extends InventoryEffectRenderer {
     public static final ResourceLocation background = 
-			new ResourceLocation("rsstats","textures/gui/StatsAndInvTab.png");
+			new ResourceLocation("rsstats","textures/gui/mainMenu.png");
     
     /**
      * x size of the inventory window in pixels. Defined as  float, passed as int
@@ -32,16 +32,16 @@ public class StatsAndInvTabGui extends InventoryEffectRenderer {
      */
     private float ySizeFloat;
 
-    public StatsAndInvTabGui(EntityPlayer player) {
-        super(new StatsAndInvContainer());
+    public MainMenuGUI(EntityPlayer player) {
+        super(new MainMenuContainer());
         this.allowUserInput = true;
     }
 
     /*
     Этот метод нужн только для того, чтобы из ClienPrxy вызывать GUI. Потом этот конструктор следут удалить
     */
-    public StatsAndInvTabGui() {
-        super(new StatsAndInvContainer());
+    public MainMenuGUI() {
+        super(new MainMenuContainer());
         this.allowUserInput = true;
     }
     
@@ -69,21 +69,21 @@ public class StatsAndInvTabGui extends InventoryEffectRenderer {
         this.mc.getTextureManager().bindTexture(background);
         int k = this.guiLeft;
         int l = this.guiTop;
-        /*
-        this.xSize = 177;
-        this.ySize = 106;
-        */
-        this.drawTexturedModalRect(0, 0, 0, 0, (int)this.xSizeFloat, (int)this.ySizeFloat);
+        
+        this.xSize = 179;
+        this.ySize = 230;
+        
+        this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
         //this.drawTexturedModalRect(0, 0, 200, 0, 16, 16);
         
-        for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)
+        /*for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)
         {
             Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);
             if (slot.getHasStack() && slot.getSlotStackLimit()==1)
             {
             	this.drawTexturedModalRect(k+slot.xDisplayPosition, l+slot.yDisplayPosition, 200, 0, 16, 16);
             }
-        }
+        }*/
         
         /*Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();

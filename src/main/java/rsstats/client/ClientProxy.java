@@ -10,7 +10,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import rsstats.client.gui.StatsAndInvTabGui;
+import rsstats.client.gui.MainMenuGUI;
 import rsstats.common.CommonProxy;
 import rsstats.common.RSStats;
 import rsstats.common.event.KeyHandler;
@@ -24,7 +24,7 @@ public class ClientProxy extends CommonProxy {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (world instanceof WorldClient) {
             switch (ID) {
-                case RSStats.GUI: return new StatsAndInvTabGui();
+                case RSStats.GUI: return new MainMenuGUI();
             }
         }
         return null;
@@ -34,6 +34,6 @@ public class ClientProxy extends CommonProxy {
 	public void registerKeyBindings() {
 		keyHandler = new KeyHandler();
 		FMLCommonHandler.instance().bus().register(keyHandler);
-		MinecraftForge.EVENT_BUS.register(new StatsAndInvTabGui());
+		MinecraftForge.EVENT_BUS.register(new MainMenuGUI());
 	}
 }

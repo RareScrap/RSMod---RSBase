@@ -8,7 +8,7 @@ package rsstats.common;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import rsstats.common.container.StatsAndInvContainer;
+import rsstats.common.container.MainMenuContainer;
 import rsstats.common.event.KeyHandler;
 
 /**
@@ -22,7 +22,7 @@ public class CommonProxy  implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
-            case RSStats.GUI: return new StatsAndInvContainer();
+            case RSStats.GUI: return new MainMenuContainer();
         }
         return null;
     }
