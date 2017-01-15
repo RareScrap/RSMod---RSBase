@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-
+// Еще не готов - ошибки компиляции
 public class Config {
 	
 	public static Configuration config;
