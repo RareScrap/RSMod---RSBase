@@ -15,3 +15,6 @@ hs_err_pid*
 .gradle/2.0/taskArtifacts/cache.properties.lock
 *.bin
 .gradle/gradle.log
+/RSBase/.nb-gradle/
+/RSStats/build/
+/RSStats/.nb-gradle/
