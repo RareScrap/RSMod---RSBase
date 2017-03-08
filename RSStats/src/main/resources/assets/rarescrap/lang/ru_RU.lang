@@ -1,5 +1,5 @@
 item.StrenghtStatItem.name=Сила
-item.StrenghtStatItem.level=Сила (%1$d Уровень)
+item.StrenghtStatItem.level=%1$d Уровень
 item.StrenghtStatItem.descriprion=Грубая физическая сила. Высокое значение этой характеристики отлично подходит брутальным персонажам.
 item.StrenghtStatItem.moreInfo=Нажмите Shift для подробной информации
 item.StrenghtStatItem.roll=Бросок

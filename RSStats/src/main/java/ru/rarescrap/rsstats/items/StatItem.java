@@ -132,6 +132,7 @@ public class StatItem extends Item {
         //return this.getUnlocalizedName() + "_" + (Integer.valueOf( stack.getItemDamage() ) + 1); - пригодится когда каждому подтипу нужно дать индивидуальное имя
     }
     
+    // Работает когда юзаешь предмет на панели
     /*@Override
     public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
         entityplayer.addChatComponentMessage(new ChatComponentText("ROLL!"));
