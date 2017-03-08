@@ -32,8 +32,8 @@ public class StatItem extends Item {
             this.dices[i] = diceInput[i];
         }
         
-        this.localePrefix = localePrefix;
         this.registerIconPrefix = registerIconPrefix;
+        this.localePrefix = localePrefix;
         
         this.setUnlocalizedName(unlocalizedName);
         this.setMaxStackSize(1);
