@@ -2,3 +2,4 @@ item.StrenghtStatItem.name=StrenghtStatItem
 item.StrenghtStatItem.level=Strenght (%1$d Level)
 item.StrenghtStatItem.descriprion=Raw physical strength. A high Strength is good for physical characters
 item.StrenghtStatItem.moreInfo=Press Shift for more information
+item.StrenghtStatItem.roll=Roll
