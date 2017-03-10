@@ -1,5 +1,7 @@
 package ru.rarescrap.rsstats.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiScreen; // Нужен для зажима Shift при показе описания
 import net.minecraft.client.renderer.texture.IIconRegister; // Регистрация иконок в игре
 import net.minecraft.creativetab.CreativeTabs; // Вкладки креативного режима. Нужно для расположения в них элементов
@@ -16,6 +18,8 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import ru.rarescrap.network.packets.RollPacket;
+import static ru.rarescrap.rsstats.RSStats.INSTANCE;
 
 public class StatItem extends Item {
     private int NUMBER_OF_SUBTYPES = 10; // Количество видов этого предмета (например, количество вида одной статы - от 1 до 10)
@@ -132,14 +136,20 @@ public class StatItem extends Item {
         //return this.getUnlocalizedName() + "_" + (Integer.valueOf( stack.getItemDamage() ) + 1); - пригодится когда каждому подтипу нужно дать индивидуальное имя
     }
     
+    @SideOnly(Side.SERVER)
+    public String roll() {
+        return "Бросок Силы: d6+1 = 6+6+4+1=17";
+    }
+    
     // Работает когда юзаешь предмет на панели
-    /*@Override
+    @Override
     public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-        entityplayer.addChatComponentMessage(new ChatComponentText("ROLL!"));
+        INSTANCE.sendToServer(new RollPacket("123"));
+        //entityplayer.addChatComponentMessage(new ChatComponentText(this.roll()));
         
        return itemstack;
         //return super.onItemRightClick(itemstack, world, entityplayer); //To change body of generated methods, choose Tools | Templates.
-    }*/
+    }
     
     
     /*public float getStrVsBlock(ItemStack stack, Block block, int meta) 
