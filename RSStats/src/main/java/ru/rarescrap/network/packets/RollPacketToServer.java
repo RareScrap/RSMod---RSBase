@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.rarescrap.network.packets;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
@@ -12,14 +7,20 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentText;
+
+import java.util.concurrent.ThreadLocalRandom;
        
-
-public class RollPacket implements IMessage {
+/**
+ * Этот пакет отсылается сервера
+ * @author RareScrap
+ */
+public class RollPacketToServer implements IMessage {
     private String diceRollMessage;
+    
+    // На форумах и в доках пишут, что конструктор по умолчанию необходим
+    public RollPacketToServer() {}
 
-    public RollPacket() {}
-
-    public RollPacket(String message) {
+    public RollPacketToServer(String message) {
         this.diceRollMessage = message;
     }
     
@@ -33,18 +34,30 @@ public class RollPacket implements IMessage {
         ByteBufUtils.writeUTF8String(buf, this.diceRollMessage);
     }
     
-    public static class MessageHandler implements IMessageHandler<RollPacket, IMessage> {
+    /**
+     * Этот внутренний класс обрабатывает пришедший пакет НА СТОРОНЕ СЕРВЕРА
+     */
+    public static class MessageHandler implements IMessageHandler<RollPacketToServer, IMessage> {
         // Do note that the default constructor is required, but implicitly defined in this case
+        public MessageHandler() {}
 
         @Override
-        public IMessage onMessage(RollPacket message, MessageContext ctx) {
+        public IMessage onMessage(RollPacketToServer message, MessageContext ctx) {
             // This is the player the packet was sent to the server from
             EntityPlayerMP serverPlayer = ctx.getServerHandler().playerEntity;
             // The value that was sent
             String amount = message.diceRollMessage;
             // No response packet
             
+            int min = 1;
+            int max = 20;
+            int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+            amount = String.valueOf(randomNum);
+            
+            
+            // Заменить на нормальное вычисление
             serverPlayer.addChatComponentMessage(new ChatComponentText(amount));
+            
             return null;
         }
     }
