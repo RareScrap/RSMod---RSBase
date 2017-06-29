@@ -12,7 +12,7 @@ public class Config {
 	public static Configuration config;
 	
     // config properties
-    private static String[] AllowedStats = false;
+    /*private static String[] AllowedStats = false;
     private static String[] AllowedStats = false;
 	
 	public static void initialize(File file)
@@ -45,5 +45,5 @@ public class Config {
 	
     public static boolean isSplitSurvivalCreative() {
         return splitSurvivalCreative;
-    }
+    }*/
 }

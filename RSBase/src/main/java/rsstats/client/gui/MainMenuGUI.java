@@ -21,7 +21,7 @@ import rsstats.common.container.MainMenuContainer;
  */
 public class MainMenuGUI extends InventoryEffectRenderer {
     public static final ResourceLocation background = 
-			new ResourceLocation("rsstats","textures/gui/mainMenu.png");
+			new ResourceLocation("rsstats","textures/gui/StatsAndInvTab1.png");
     
     /**
      * x size of the inventory window in pixels. Defined as  float, passed as int
@@ -67,13 +67,51 @@ public class MainMenuGUI extends InventoryEffectRenderer {
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(background);
-        int k = this.guiLeft;
-        int l = this.guiTop;
         
-        this.xSize = 179;
-        this.ySize = 230;
+        this.guiLeft = (this.width - 353) / 2;
+        this.guiTop = (this.height - 212) / 2;
         
-        this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+        int x = this.guiLeft;
+        int y = this.guiTop;
+        
+        //this.xSize = 179;
+        //this.ySize = 230;
+        
+        //this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
+        
+        /*
+         1.8
+        public static void drawModalRectWithCustomSizedTexture(int x, int y,
+        float u, float v, int width, int height, float textureWidth, float textureHeight)
+        */
+        // 1.7.10
+        //func_146110_a(x, y, 0, 0, width, height, 512, 512);
+        
+        
+        
+       
+        /*
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();    
+        tessellator.addVertexWithUV(x        , y + height, 0, 0.0, 1.0);
+        tessellator.addVertexWithUV(x + width, y + height, 0, 1.0, 1.0);
+        tessellator.addVertexWithUV(x + width, y         , 0, 1.0, 0.0);
+        tessellator.addVertexWithUV(x        , y         , 0, 0.0, 0.0);
+        tessellator.draw();
+        */
+        
+        
+        
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();    
+        tessellator.addVertexWithUV(x        , y + 512, 0, 0.0, 1.0);
+        tessellator.addVertexWithUV(x + 512, y + 512, 0, 1.0, 1.0);
+        tessellator.addVertexWithUV(x + 512, y         , 0, 1.0, 0.0);
+        tessellator.addVertexWithUV(x        , y         , 0, 0.0, 0.0);
+        tessellator.draw();
+                
+        
+        
         //this.drawTexturedModalRect(0, 0, 200, 0, 16, 16);
         
         /*for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)
