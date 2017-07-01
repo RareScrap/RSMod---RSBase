@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentText;
 
 import java.util.concurrent.ThreadLocalRandom;
+import net.minecraft.util.StatCollector;
        
 /**
  * Этот пакет отсылается сервера
@@ -49,14 +50,36 @@ public class RollPacketToServer implements IMessage {
             String amount = message.diceRollMessage;
             // No response packet
             
+            String maxS = new String();
+            String stat = new String();
+            int i = 0;
+            for (; amount.charAt(i) != '_'; i++) {
+                maxS += amount.charAt(i);
+            }
+            i++;
+            for (; i < amount.length(); i++) {
+                stat += amount.charAt(i);
+            }
+            
             int min = 1;
-            int max = 20;
+            int max = Integer.parseInt(maxS);
+            
+            String result = StatCollector.translateToLocalFormatted("item.StatItem.rollChatMessage", stat) + ": ";
+            int resultInt = 0;
             int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
-            amount = String.valueOf(randomNum);
+            resultInt += randomNum;
+            while(randomNum == max) {
+                result += String.valueOf(randomNum)+ "+";
+                resultInt += randomNum;
+                randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+                
+            }
+            result += String.valueOf(randomNum)+ "= " + resultInt+randomNum;
+            resultInt += randomNum;
             
             
             // Заменить на нормальное вычисление
-            serverPlayer.addChatComponentMessage(new ChatComponentText(amount));
+            serverPlayer.addChatComponentMessage(new ChatComponentText(result));
             
             return null;
         }

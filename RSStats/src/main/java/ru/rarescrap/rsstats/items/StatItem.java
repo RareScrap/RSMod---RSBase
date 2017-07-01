@@ -20,6 +20,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import ru.rarescrap.network.packets.RollPacketToServer;
 import static ru.rarescrap.rsstats.RSStats.INSTANCE;
+import ru.rarescrap.rsstats.utils.DiceRoll;
 
 public class StatItem extends Item {
     private int NUMBER_OF_SUBTYPES = 5; // Количество видов этого предмета (например, количество вида одной статы - от 1 до 10)
@@ -32,6 +33,10 @@ public class StatItem extends Item {
     /** Префикс, используемый игрой для нахождеия файлов локализации мода */
     private String localePrefix; // "item.StrenghtStatItem" например
     
+    private DiceRoll[] basicRolls;
+    
+    /** Префикс, одинаковый для всех статов */
+    private String generalPrefix = "item.StatItem";
     /**
      * Конструктор, инициализирующий свои поля
      * @param diceInput Информация о броске на каждый уровень ({@link #NUMBER_OF_SUBTYPES}) статы.
@@ -39,9 +44,9 @@ public class StatItem extends Item {
      * @param registerIconPrefix Префикс, который игра будет использовать игрой для нахождения текстур для данного предмета
      * @param localePrefix Префикс, который игра будет использовать игрой для нахождения файлов локализации для данного предмета
      */
-    public StatItem(String diceInput[], String unlocalizedName, String registerIconPrefix, String localePrefix) {
+    public StatItem(DiceRoll[] basicRolls, String unlocalizedName, String registerIconPrefix, String localePrefix) {
         // TODO: Дайсы должны задаваться через серверный конфиг
-        this.dices = diceInput; // Копирование входящих дайсов в поле класса
+        this.basicRolls = basicRolls;
         
         this.registerIconPrefix = registerIconPrefix;
         this.localePrefix = localePrefix;
@@ -54,49 +59,15 @@ public class StatItem extends Item {
 
     @Override
     public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
+        // Уровень статы
+        int statLevel = itemstack.getItemDamage(); // Нумерация с нуля
+        
+        // Строка "Уровень X"
+        list.add(StatCollector.translateToLocalFormatted( generalPrefix + ".level", statLevel+1) );
+        
         // Строка броска (пример: "Бросок: d6+1")
-        switch(itemstack.getItemDamage()) {
-        case 0:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 1));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[0]);
-            break;
-        case 1:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 2));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[1]);
-            break;
-        case 2:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 3));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[2]);
-            break;
-        case 3:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 4));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[3]);
-            break;
-        case 4:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 5));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[4]);
-            break;
-        case 5:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 6));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[5]);
-            break;
-        case 6:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 7));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[6]);
-            break;
-        case 7:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 8));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[7]);
-            break;
-        case 8:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 9));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[8]);
-            break;
-        case 9:
-            list.add(StatCollector.translateToLocalFormatted(localePrefix + ".level", 10));
-            list.add(StatCollector.translateToLocal(localePrefix + ".roll") + ": " + dices[9]);
-            break;
-        }
+        list.add(StatCollector.translateToLocal(generalPrefix + ".roll") + ": d" + basicRolls[statLevel].dice);
+        
         list.add(""); // Пустая строка-разделитель
         
         // Дополнительная информация по кнопке Shift
@@ -111,7 +82,7 @@ public class StatItem extends Item {
             for (int i = 0; i < moreInfoStrings.length; ++i) {
                 list.add(moreInfoStrings[i]);
             }*/
-            list.add( StatCollector.translateToLocal(localePrefix + ".moreInfo") );
+            list.add( StatCollector.translateToLocal(generalPrefix + ".moreInfo") );
         }
     }
 
@@ -161,10 +132,17 @@ public class StatItem extends Item {
     // Работает когда юзаешь предмет на панели
     @Override
     public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-        INSTANCE.sendToServer(new RollPacketToServer( String.valueOf(itemstack.getIconIndex())) ); // "123"
+        if (!world.isRemote) { // TODO: На какой стороне вычисляется бросок?
+            //String num = String.valueOf( basicRolls[ Integer.parseInt(itemstack.getIconIndex().toString()) ].dice );
+            String statName = StatCollector.translateToLocalFormatted( localePrefix + ".name");
+            String str = itemstack.getIconIndex().getIconName();
+            str = str.replaceAll("[^\\d.]", "");
+            INSTANCE.sendToServer(new RollPacketToServer(str+"_"+statName)); // "123" // itemstack.getIconIndex(
+            entityplayer.addChatComponentMessage(new ChatComponentText(str));
+        }
         //entityplayer.addChatComponentMessage(new ChatComponentText(this.roll()));
         
-       return itemstack;
+        return itemstack;
         //return super.onItemRightClick(itemstack, world, entityplayer); //To change body of generated methods, choose Tools | Templates.
     }
     

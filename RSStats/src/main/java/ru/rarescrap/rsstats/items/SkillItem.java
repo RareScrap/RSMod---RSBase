@@ -5,10 +5,17 @@
  */
 package ru.rarescrap.rsstats.items;
 
+import ru.rarescrap.rsstats.utils.DiceRoll;
+
 /**
  *
  * @author rares
  */
-public class SkillItem {
+public class SkillItem extends StatItem {
+    public String parentStatUnlocalizedName;
     
+    public SkillItem(DiceRoll[] diceInput, String unlocalizedName, String registerIconPrefix, String localePrefix, String parentStatUnlocalizedName) {
+        super(diceInput, unlocalizedName, registerIconPrefix, localePrefix);
+        this.parentStatUnlocalizedName = parentStatUnlocalizedName;
+    }
 }

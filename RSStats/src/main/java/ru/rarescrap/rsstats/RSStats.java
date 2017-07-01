@@ -14,10 +14,12 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
+import java.util.List;
 import net.minecraft.item.Item;
 import ru.rarescrap.network.packets.RollPacketToServer;
 
 import ru.rarescrap.rsstats.items.StatItem;
+import ru.rarescrap.rsstats.utils.DiceRoll;
 
 /**
  * Главный класс мода RSStats
@@ -49,21 +51,25 @@ public class RSStats {
         //INSTANCE.registerMessage(RollPacketToServer.MessageHandler.class, RollPacketToServer.class, 0, Side.CLIENT);
         INSTANCE.registerMessage(RollPacketToServer.MessageHandler.class, RollPacketToServer.class, 1, Side.SERVER);
     
-        String[] dices = new String[10];
-        dices[0] = "d4";
-        dices[1] = "d4+1";
-        dices[2] = "d6";
-        dices[3] = "d6+1";
-        dices[4] = "d8";
-        dices[5] = "d8+1";
-        dices[6] = "d10";
-        dices[7] = "d10+1";
-        dices[8] = "d12";
-        dices[9] = "d20";
+        DiceRoll[] dices = new DiceRoll[5];
+        dices[0] = new DiceRoll(4);
+        dices[1] = new DiceRoll(6);
+        dices[2] = new DiceRoll(8);
+        dices[3] = new DiceRoll(10);
+        dices[4] = new DiceRoll(12);
         
         // Инициализация и регистрация тестового предмета
         StatItem strenghtStatItem = new StatItem(dices, "StrenghtStatItem", "rsstats:strenght", "item.StrenghtStatItem"); // 3 - rarescrap:StrenghtIcon_
+        StatItem agilityStatItem = new StatItem(dices, "AgilityStatItem", "rsstats:strenght", "item.AgilityStatItem");
+        StatItem intelligenceStatItem = new StatItem(dices, "IntelligenceStatItem", "rsstats:strenght", "item.IntelligenceStatItem");
+        StatItem enduranceStatItem = new StatItem(dices, "EnduranceStatItem", "rsstats:strenght", "item.EnduranceStatItem");
+        StatItem charismaStatItem = new StatItem(dices, "CharismaStatItem", "rsstats:strenght", "item.CharismaStatItem");
+        
         GameRegistry.registerItem(strenghtStatItem, "StrenghtStatItem");
+        GameRegistry.registerItem(agilityStatItem, "AgilityStatItem");
+        GameRegistry.registerItem(intelligenceStatItem, "IntelligenceStatItem");
+        GameRegistry.registerItem(enduranceStatItem, "EnduranceStatItem");
+        GameRegistry.registerItem(charismaStatItem, "CharismaStatItem");
     }
 
     @Mod.EventHandler

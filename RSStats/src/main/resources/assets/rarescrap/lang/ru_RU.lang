@@ -1,5 +1,14 @@
 item.StrenghtStatItem.name=Сила
-item.StrenghtStatItem.level=%1$d Уровень
+item.AgilityStatItem.name=Ловость
+item.IntelligenceStatItem.name=Интеллект
+item.EnduranceStatItem.name=Выносливость
+item.CharismaStatItem.name=Харизма
+item.StatItem.level=%1$d Уровень
 item.StrenghtStatItem.descriprion=Грубая физическая сила. Высокое значение этой характеристики отлично подходит брутальным персонажам.
-item.StrenghtStatItem.moreInfo=Нажмите Shift для подробной информации
-item.StrenghtStatItem.roll=Бросок
+item.AgilityStatItem.descriprion=Ловкость хорошо подходит для пидоров
+item.IntelligenceStatItem.descriprion=Тот кно умный - гавно хуюмный
+item.EnduranceStatItem.descriprion=Вынослиовсть ужна чтобы переносить тяготы долбежки в сракотан
+item.CharismaStatItem.descriprion=Определяет твои навыки склеить чужую мамку
+item.StatItem.moreInfo=Нажмите Shift для подробной информации
+item.StatItem.roll=Бросок
+item.StatItem.rollChatMessage=Бросок навыка "%1$s"
