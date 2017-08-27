@@ -18,3 +18,4 @@ hs_err_pid*
 /RSBase/.nb-gradle/
 /RSStats/build/
 /RSStats/.nb-gradle/
+*.log
