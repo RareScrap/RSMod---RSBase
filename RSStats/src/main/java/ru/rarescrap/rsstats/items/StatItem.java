@@ -2,6 +2,7 @@ package ru.rarescrap.rsstats.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
 import net.minecraft.client.gui.GuiScreen; // Нужен для зажима Shift при показе описания
 import net.minecraft.client.renderer.texture.IIconRegister; // Регистрация иконок в игре
 import net.minecraft.creativetab.CreativeTabs; // Вкладки креативного режима. Нужно для расположения в них элементов
@@ -15,36 +16,42 @@ import net.minecraft.util.IIcon; // Хранилище иконок
 import net.minecraft.util.StatCollector; // Класс для получения строкиз файла локализации
 import ru.rarescrap.rsstats.utils.DescriptionCutter; // Для обрезки длинных предложений
 import java.util.List;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import ru.rarescrap.network.packets.RollPacketToServer;
 import static ru.rarescrap.rsstats.RSStats.INSTANCE;
 import ru.rarescrap.rsstats.utils.DiceRoll;
 
+/**
+ * Предмет, реализующий функции статы
+ * @author RareScrap
+ */
 public class StatItem extends Item {
-    private int NUMBER_OF_SUBTYPES = 5; // Количество видов этого предмета (например, количество вида одной статы - от 1 до 10)
+    /** Общее количество уровней статы */
+    private static int NUMBER_OF_LEVELS = 5;
     
-    public IIcon[] icons = new IIcon[NUMBER_OF_SUBTYPES]; // хранилище иконок для всего семейства предмета
-    public String[] dices = new String[NUMBER_OF_SUBTYPES]; // Бросок, соответствующей каждому предмету из семейству
-    private String descriprion; // Описание предмета, получаемое из файла локализации
+    /** Хранилище иконов для каждого уровня статы */
+    public IIcon[] icons = new IIcon[NUMBER_OF_LEVELS]; // хранилище иконок для всего семейства предмета
+    /** Набор разных дайсов. Порядковый номер в списке обозачает уровень статы,
+     * для которой будет использован дайс. */
+    public ArrayList<DiceRoll> basicRolls;
+    /** Описание предмета статы, получаемое из файла локализации */
+    private String descriprion;
     /** Префикс, используемый игрой для нахождеия текстур мода */
     private String registerIconPrefix; // "rarescrap:StrenghtIcon_" например
     /** Префикс, используемый игрой для нахождеия файлов локализации мода */
     private String localePrefix; // "item.StrenghtStatItem" например
     
-    private DiceRoll[] basicRolls;
-    
     /** Префикс, одинаковый для всех статов */
     private String generalPrefix = "item.StatItem";
     /**
      * Конструктор, инициализирующий свои поля
-     * @param diceInput Информация о броске на каждый уровень ({@link #NUMBER_OF_SUBTYPES}) статы.
+     * @param basicRolls Дайл для броска для каждого из уровней ({@link #NUMBER_OF_LEVELS}) статы.
      * @param unlocalizedName Нелокализированое имя мода (TODO: ХЗ для чего нужно)
      * @param registerIconPrefix Префикс, который игра будет использовать игрой для нахождения текстур для данного предмета
      * @param localePrefix Префикс, который игра будет использовать игрой для нахождения файлов локализации для данного предмета
      */
-    public StatItem(DiceRoll[] basicRolls, String unlocalizedName, String registerIconPrefix, String localePrefix) {
+    public StatItem(ArrayList<DiceRoll> basicRolls, String unlocalizedName, String registerIconPrefix, String localePrefix) {
         // TODO: Дайсы должны задаваться через серверный конфиг
         this.basicRolls = basicRolls;
         
@@ -66,7 +73,7 @@ public class StatItem extends Item {
         list.add(StatCollector.translateToLocalFormatted( generalPrefix + ".level", statLevel+1) );
         
         // Строка броска (пример: "Бросок: d6+1")
-        list.add(StatCollector.translateToLocal(generalPrefix + ".roll") + ": d" + basicRolls[statLevel].dice);
+        list.add(StatCollector.translateToLocal(generalPrefix + ".roll") + ": d" + basicRolls.get(statLevel).dice);
         
         list.add(""); // Пустая строка-разделитель
         
@@ -104,7 +111,7 @@ public class StatItem extends Item {
     @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack par1ItemStack) {
          //par1ItemStack.setTagInfo("ench", new NBTTagList());
-         if (par1ItemStack.getItemDamage() == NUMBER_OF_SUBTYPES-1)
+         if (par1ItemStack.getItemDamage() == NUMBER_OF_LEVELS-1)
             return true;
          else
              return false;
