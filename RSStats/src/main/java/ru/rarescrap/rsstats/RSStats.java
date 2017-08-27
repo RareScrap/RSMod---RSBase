@@ -14,6 +14,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.Item;
 import ru.rarescrap.network.packets.RollPacketToServer;
@@ -22,10 +23,12 @@ import ru.rarescrap.rsstats.items.StatItem;
 import ru.rarescrap.rsstats.utils.DiceRoll;
 
 /**
- * Главный класс мода RSStats
+ * Главный класс мода RSStats - видоизмененной ролевой системы
+ * "Дневник аватюриста".
+ * 
  * @author RareScrap
  */
-@Mod(modid="rsstats", version="0.0.1a", name="RSStats")
+@Mod(modid=RSStats.MODID, version=RSStats.VERSION, name=RSStats.MODNAME)
 public class RSStats {
     /** ID мода для итендефекации в FML */
     public static final String MODID = "rsstats";
@@ -38,38 +41,31 @@ public class RSStats {
     @SidedProxy(clientSide="ru.rarescrap.rsstats.ClientProxy", serverSide="ru.rarescrap.rsstats.ServerProxy")
     public static CommonProxy proxy;
     
-    // ХЗ можно ли делать это статиком
-    /** TODO: ХЗ зачем это */
-    public static SimpleNetworkWrapper INSTANCE = new SimpleNetworkWrapper("test");
+    /** Объект, регистриующий сообщения, которыми обмениваются клиент и сервер */
+    public static SimpleNetworkWrapper INSTANCE = new SimpleNetworkWrapper(MODID);
 
+    /** Дайсы, которые будут использоваться в моде */
+    ArrayList<DiceRoll> dices = new ArrayList<DiceRoll>();
+    
+    /**
+     * Конструктор, инициализирующий список допустимых дайсов
+     */
+    public RSStats() {
+        // Определяем дайсы
+        dices.add(new DiceRoll(4));
+        dices.add(new DiceRoll(6));
+        dices.add(new DiceRoll(8));
+        dices.add(new DiceRoll(10));
+        dices.add(new DiceRoll(12));
+    }
+    
+    /**
+     * Фаза преинициализации мода. Тут регистрируются предметы, блоки и сообщения
+     * @param event Объект события преинициализации
+     */
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        proxy.preInit(event);
-        
-        //TODO: КОД НИЖЕ МОЖНО(НУЖНО?) ВЫНЕСТИ В СООТВЕТСТВУЮЩИЕ ПРОКСИ
-        
-        //INSTANCE.registerMessage(RollPacketToServer.MessageHandler.class, RollPacketToServer.class, 0, Side.CLIENT);
-        INSTANCE.registerMessage(RollPacketToServer.MessageHandler.class, RollPacketToServer.class, 1, Side.SERVER);
-    
-        DiceRoll[] dices = new DiceRoll[5];
-        dices[0] = new DiceRoll(4);
-        dices[1] = new DiceRoll(6);
-        dices[2] = new DiceRoll(8);
-        dices[3] = new DiceRoll(10);
-        dices[4] = new DiceRoll(12);
-        
-        // Инициализация и регистрация тестового предмета
-        StatItem strenghtStatItem = new StatItem(dices, "StrenghtStatItem", "rsstats:strenght", "item.StrenghtStatItem"); // 3 - rarescrap:StrenghtIcon_
-        StatItem agilityStatItem = new StatItem(dices, "AgilityStatItem", "rsstats:strenght", "item.AgilityStatItem");
-        StatItem intelligenceStatItem = new StatItem(dices, "IntelligenceStatItem", "rsstats:strenght", "item.IntelligenceStatItem");
-        StatItem enduranceStatItem = new StatItem(dices, "EnduranceStatItem", "rsstats:strenght", "item.EnduranceStatItem");
-        StatItem charismaStatItem = new StatItem(dices, "CharismaStatItem", "rsstats:strenght", "item.CharismaStatItem");
-        
-        GameRegistry.registerItem(strenghtStatItem, "StrenghtStatItem");
-        GameRegistry.registerItem(agilityStatItem, "AgilityStatItem");
-        GameRegistry.registerItem(intelligenceStatItem, "IntelligenceStatItem");
-        GameRegistry.registerItem(enduranceStatItem, "EnduranceStatItem");
-        GameRegistry.registerItem(charismaStatItem, "CharismaStatItem");
+        proxy.preInit(event, dices); // Преинициализация в общем прокси
     }
 
     @Mod.EventHandler
