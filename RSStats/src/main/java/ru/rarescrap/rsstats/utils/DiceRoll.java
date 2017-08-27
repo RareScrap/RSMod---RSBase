@@ -5,6 +5,8 @@
  */
 package ru.rarescrap.rsstats.utils;
 
+import io.netty.buffer.ByteBuf;
+import java.nio.ByteBuffer;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
  */
 public class DiceRoll {
     public int dice;
-    private List<RollModificator> modificators;
+    public List<RollModificator> modificators;
     
     public DiceRoll(int dice) {
         this.dice = dice;
@@ -21,5 +23,9 @@ public class DiceRoll {
     
     public void addModificatot(RollModificator rollModificator) {
         modificators.add(rollModificator);
+    }
+
+    public byte[] toBytesForRollSend() {
+        byte[] bytes = ByteBuffer.allocate(4).putInt(dice).array();
     }
 }
