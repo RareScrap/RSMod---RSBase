@@ -10,12 +10,10 @@ package ru.rarescrap.rsstats.utils;
  * @author rares
  */
 public class RollModificator {
-    public String name;
     public int value;
     public String description;
     
-    public RollModificator(int value, String name, String description) {
-        this.name = name;
+    public RollModificator(int value, String description) {
         this.value = value;
         this.description = description;
     }

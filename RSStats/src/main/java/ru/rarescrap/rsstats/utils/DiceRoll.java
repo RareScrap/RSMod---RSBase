@@ -7,14 +7,18 @@ package ru.rarescrap.rsstats.utils;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
+import net.minecraft.util.StatCollector;
 
 /**
  * Объект броска дайсов
  * @author RareScrap
  */
 public class DiceRoll implements Serializable {
+    /** Имя пробрасываемой статы */
+    private String statName;
     /** Количество граней на дайсе */
-    private int dice;
+    private final int dice;
     /** Список модификаторов, которые должны быть учтены */
     private List<RollModificator> modificators;
     
@@ -36,5 +40,49 @@ public class DiceRoll implements Serializable {
     
     public List<RollModificator> getModificators() {
         return modificators;
+    }
+    
+    /**
+     * Вычисляет бросок
+     * @return Сообщения броска
+     */
+    public String roll() {
+        // Подготовка объектов для генерации случайных чисел
+        Random randomObject = new Random(); // Генератор случайных чисел
+        int rollResultInt = 0; // Сумма всех бросков при взрыве
+        String rollResultString = new String(); // Строка вида "4+4+4+2"
+
+        int random; // Случайное число, заполняемое при каждой итерации цикла
+        do {
+            random = randomObject.nextInt(dice);
+            rollResultInt += random;
+            rollResultString += random;
+
+            // Обработка взрывных бросков
+            if (random == dice) {
+                rollResultString += "+";
+            } else {
+                rollResultString += dice + "=" + rollResultInt;
+                break;
+            }
+        } while (true);
+        
+        rollResultString += " ";
+
+        // Обработка модификаторов
+        for (int i = 0; i < modificators.size(); ++i) {
+            RollModificator rollModificator = modificators.get(i);
+
+            rollResultInt += rollModificator.value;
+            rollResultString += "+" +rollModificator.value + "("
+                    + rollModificator.description + ") ";
+        }
+
+        // Вывести общую сумму бросков
+        rollResultString += "=== " + rollResultInt;
+
+        // Сформировать итоговое сообщение
+        return StatCollector.translateToLocalFormatted("item.StatItem.rollChatMessage", statName)
+                + ": " + rollResultString;
     }
 }
