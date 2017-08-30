@@ -16,18 +16,22 @@ import net.minecraft.util.StatCollector;
  */
 public class DiceRoll implements Serializable {
     /** Имя пробрасываемой статы */
-    private String statName;
+    private String statName = null;
     /** Количество граней на дайсе */
-    private final int dice;
+    public final int dice;
     /** Список модификаторов, которые должны быть учтены */
     private List<RollModificator> modificators;
     
     /**
      * Конструктор, инициализирующий свои поля
-     * @param dice Количество граней на дайсе
+     * @param dice Количество граней на дайсе 
      */
     public DiceRoll(int dice) {
         this.dice = dice;
+    }
+    
+    public void setStatName(String statName) {
+        this.statName = statName;
     }
     
     /**
@@ -47,6 +51,9 @@ public class DiceRoll implements Serializable {
      * @return Сообщения броска
      */
     public String roll() {
+        if (statName == null)
+            throw new NullPointerException("statName is null");
+        
         // Подготовка объектов для генерации случайных чисел
         Random randomObject = new Random(); // Генератор случайных чисел
         int rollResultInt = 0; // Сумма всех бросков при взрыве
