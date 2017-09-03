@@ -5,6 +5,7 @@
  */
 package ru.rarescrap.rsstats.items;
 
+import java.util.ArrayList;
 import ru.rarescrap.rsstats.utils.DiceRoll;
 
 /**
@@ -13,9 +14,9 @@ import ru.rarescrap.rsstats.utils.DiceRoll;
  */
 public class SkillItem extends StatItem {
     public String parentStatUnlocalizedName;
-    
-    public SkillItem(DiceRoll[] diceInput, String unlocalizedName, String registerIconPrefix, String localePrefix, String parentStatUnlocalizedName) {
-        super(diceInput, unlocalizedName, registerIconPrefix, localePrefix);
-        this.parentStatUnlocalizedName = parentStatUnlocalizedName;
+
+    public SkillItem(ArrayList<DiceRoll> basicRolls, String unlocalizedName, String registerIconPrefix, String localePrefix) {
+        super(basicRolls, unlocalizedName, registerIconPrefix, localePrefix);
     }
+    
 }

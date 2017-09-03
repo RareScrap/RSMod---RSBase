@@ -2,6 +2,12 @@ package ru.rarescrap.rsstats.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import net.minecraft.client.gui.GuiScreen; // Нужен для зажима Shift при показе описания
 import net.minecraft.client.renderer.texture.IIconRegister; // Регистрация иконок в игре
@@ -16,8 +22,11 @@ import net.minecraft.util.IIcon; // Хранилище иконок
 import net.minecraft.util.StatCollector; // Класс для получения строкиз файла локализации
 import ru.rarescrap.rsstats.utils.DescriptionCutter; // Для обрезки длинных предложений
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import org.apache.commons.io.FileUtils;
 import ru.rarescrap.network.packets.RollPacketToServer;
 import static ru.rarescrap.rsstats.RSStats.INSTANCE;
 import ru.rarescrap.rsstats.utils.DiceRoll;
@@ -80,7 +89,7 @@ public class StatItem extends Item {
         list.add(StatCollector.translateToLocalFormatted( generalPrefix + ".level", statLevel+1) );
         
         // Строка броска (пример: "Бросок: d6+1")
-        list.add(StatCollector.translateToLocal(generalPrefix + ".roll") + ": d" + basicRolls.get(statLevel).dice);
+        list.add(StatCollector.translateToLocal(generalPrefix + ".roll") + ": d" + basicRolls.get(statLevel).getDice());
         
         // Пустая строка-разделитель
         list.add(""); 
@@ -167,7 +176,7 @@ public class StatItem extends Item {
     @Override
     public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
         // If нужен, чтобы броить бросок только один раз
-        if (world.isRemote) { // TODO: На какой стороне вычисляется бросок?
+        //if (world.isRemote) { // TODO: На какой стороне вычисляется бросок?
             //String num = String.valueOf( basicRolls[ Integer.parseInt(itemstack.getIconIndex().toString()) ].dice );
             String statName = StatCollector.translateToLocalFormatted( localePrefix + ".name");
             int lvl = itemstack.getItemDamage();
@@ -176,12 +185,19 @@ public class StatItem extends Item {
             //String str = itemstack.getIconIndex().getIconName();
             //str = str.replaceAll("[^\\d.]", "");
             
-            basicRolls.get(lvl).setStatName(statName);
+            DiceRoll roll = new DiceRoll(
+                    basicRolls.get(lvl),
+                    entityplayer.getDisplayName(),
+                    statName,
+                    null // TODO: Получить модификаторы извне
+            );
             
-            RollPacketToServer rp = new RollPacketToServer(basicRolls.get(lvl));
-            INSTANCE.sendToServer(rp); // "123" // itemstack.getIconIndex(
-            entityplayer.addChatComponentMessage(new ChatComponentText(basicRolls.get(lvl).dice + " " + statName));
-        }
+            //entityplayer.addChatComponentMessage(new ChatComponentText(basicRolls.get(lvl).dice + " " + statName));
+            
+            RollPacketToServer packet = new RollPacketToServer(roll);
+            INSTANCE.sendToServer(packet); // "123" // itemstack.getIconIndex(          
+          
+        //}
         //entityplayer.addChatComponentMessage(new ChatComponentText(this.roll()));
         
         return itemstack;

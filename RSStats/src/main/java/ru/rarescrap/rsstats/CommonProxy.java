@@ -21,10 +21,10 @@ import ru.rarescrap.rsstats.utils.DiceRoll;
  * @author rares
  */
 public class CommonProxy {
-    /**
+    /**s
      * Фаза преинициализации мода. Тут регистрируются предметы, блоки и сообщения
      * @param e Объект события преинициализации
-     * @param dices Список дайсов, которыми могут пользоваться статы
+     * @param dices Список базовых дайсов, которыми могут пользоваться статы
      */
     public void preInit(FMLPreInitializationEvent e, ArrayList<DiceRoll> dices) {
         // Регистрация сообщения о пробросе статы
@@ -32,16 +32,16 @@ public class CommonProxy {
         
         // Инициализация предметов статов
         StatItem strenghtStatItem = new StatItem(dices, "StrenghtStatItem", "rsstats:strenght", "item.StrenghtStatItem"); // 3 - rarescrap:StrenghtIcon_
-        StatItem agilityStatItem = new StatItem(dices, "AgilityStatItem", "rsstats:strenght", "item.AgilityStatItem");
-        StatItem intelligenceStatItem = new StatItem(dices, "IntelligenceStatItem", "rsstats:strenght", "item.IntelligenceStatItem");
-        StatItem enduranceStatItem = new StatItem(dices, "EnduranceStatItem", "rsstats:strenght", "item.EnduranceStatItem");
-        StatItem charismaStatItem = new StatItem(dices, "CharismaStatItem", "rsstats:strenght", "item.CharismaStatItem");
+        StatItem agilityStatItem = new StatItem(dices, "AgilityStatItem", "rsstats:agility", "item.AgilityStatItem");
+        StatItem intelligenceStatItem = new StatItem(dices, "IntelligenceStatItem", "rsstats:intelligence", "item.IntelligenceStatItem");
+        StatItem enduranceStatItem = new StatItem(dices, "EnduranceStatItem", "rsstats:endurance", "item.EnduranceStatItem");
+        StatItem characterStatItem = new StatItem(dices, "CharacterStatItem", "rsstats:character", "item.CharacterStatItem");
         // Регистрация предметов статов
         GameRegistry.registerItem(strenghtStatItem, "StrenghtStatItem");
         GameRegistry.registerItem(agilityStatItem, "AgilityStatItem");
         GameRegistry.registerItem(intelligenceStatItem, "IntelligenceStatItem");
         GameRegistry.registerItem(enduranceStatItem, "EnduranceStatItem");
-        GameRegistry.registerItem(charismaStatItem, "CharismaStatItem");
+        GameRegistry.registerItem(characterStatItem, "CharacterStatItem");
     }
     
     public void preInit(FMLPreInitializationEvent e) {

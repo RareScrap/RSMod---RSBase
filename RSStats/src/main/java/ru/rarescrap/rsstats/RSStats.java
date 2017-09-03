@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.rarescrap.rsstats.utils.DiceRoll;
 
@@ -31,20 +32,20 @@ public class RSStats {
     
     /** Объект, регистриующий сообщения, которыми обмениваются клиент и сервер */
     public static SimpleNetworkWrapper INSTANCE = new SimpleNetworkWrapper(MODID);
-
     /** Дайсы, которые будут использоваться в моде */
-    ArrayList<DiceRoll> dices = new ArrayList<DiceRoll>();
+    ArrayList<DiceRoll> dices;
     
     /**
      * Конструктор, инициализирующий список допустимых дайсов
      */
     public RSStats() {
         // Определяем дайсы
-        dices.add(new DiceRoll(4));
-        dices.add(new DiceRoll(6));
-        dices.add(new DiceRoll(8));
-        dices.add(new DiceRoll(10));
-        dices.add(new DiceRoll(12));
+        this.dices = new ArrayList<DiceRoll>();
+        dices.add(new DiceRoll(null, null, 4));
+        dices.add(new DiceRoll(null, null, 6));
+        dices.add(new DiceRoll(null, null, 8));
+        dices.add(new DiceRoll(null, null, 10));
+        dices.add(new DiceRoll(null, null, 12));
     }
     
     /**
