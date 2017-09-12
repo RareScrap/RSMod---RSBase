@@ -21,7 +21,7 @@ import rsstats.common.container.MainMenuContainer;
  */
 public class MainMenuGUI extends InventoryEffectRenderer {
     public static final ResourceLocation background = 
-			new ResourceLocation("rsstats","textures/gui/mainMenu.png");
+			new ResourceLocation("rsstats","textures/gui/StatsAndInvTab.png");
     
     /**
      * x size of the inventory window in pixels. Defined as  float, passed as int
@@ -66,14 +66,17 @@ public class MainMenuGUI extends InventoryEffectRenderer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glScalef(2.0F, 2.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(background);
-        int k = this.guiLeft;
-        int l = this.guiTop;
         
-        this.xSize = 179;
-        this.ySize = 230;
+        this.xSize = 340/2;
+        this.ySize = 212/2;
+        
+        int k = this.guiLeft/2 - xSize/4;
+        int l = this.guiTop/2 - ySize/4;
         
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+        
         //this.drawTexturedModalRect(0, 0, 200, 0, 16, 16);
         
         /*for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)

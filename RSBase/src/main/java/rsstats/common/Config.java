@@ -7,7 +7,7 @@ import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 // Еще не готов - ошибки компиляции
-public class Config {
+public class Config {/*
 	
 	public static Configuration config;
 	
@@ -45,5 +45,5 @@ public class Config {
 	
     public static boolean isSplitSurvivalCreative() {
         return splitSurvivalCreative;
-    }
+    }*/
 }
