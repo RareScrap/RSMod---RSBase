@@ -6,8 +6,9 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import rsstats.common.network.PacketHandler;
+import net.minecraftforge.common.MinecraftForge;
+import rsstats.client.gui.SSPPage;
+import rsstats.common.event.TestEventHandler;
 
 /**
  * Главный класс мода. Представляет собой основу для всех остальных РП модов.
@@ -24,18 +25,31 @@ public class RSStats {
     /** Версия мода */
     public static final String VERSION = "0.0.1a";
     
-    public static final int GUI = 0; // Код GUI окна, кажется
+    /** ID тестового UI (первый UI, который я сделал) */
+    public static final int GUI = 0;
+    /** ID интерфейса {@link SSPPage} */
+    public static final int SSP_UI_CODE = 1;
     
     /** Объект-экземпляр мода */
     @Mod.Instance(MODID)
     public static RSStats instance = new RSStats();
     
+    /**
+     * Хандлер для событий (хз каких)
+     * Думаю, он нужен для связывания своих NBT с игрой
+     * TODO: разобраться
+     */
+    public TestEventHandler testEventHandler; 
+    
     /** Общий прокси */
-    @SidedProxy(clientSide = "rsstats.client.ClientProxy", serverSide = "rsstats.common.СommonProxy")
+    @SidedProxy(clientSide = "rsstats.client.ClientProxy", serverSide = "rsstats.common.CommonProxy")
     public static CommonProxy proxy;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        testEventHandler = new TestEventHandler();
+        MinecraftForge.EVENT_BUS.register(testEventHandler);
+        
         proxy.preInit(event);
     }
     

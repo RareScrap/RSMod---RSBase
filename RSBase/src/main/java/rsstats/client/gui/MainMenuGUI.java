@@ -12,8 +12,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import rsstats.common.RSStats;
-import net.minecraft.client.renderer.Tessellator;  //!!
-import rsstats.common.container.MainMenuContainer;
+import net.minecraft.client.renderer.Tessellator;  //!!!
+import rsstats.inventory.container.StatsContainer;
 
 /**
  *
@@ -33,7 +33,7 @@ public class MainMenuGUI extends InventoryEffectRenderer {
     private float ySizeFloat;
 
     public MainMenuGUI(EntityPlayer player) {
-        super(new MainMenuContainer());
+        super(new StatsContainer());
         this.allowUserInput = true;
     }
 
@@ -41,7 +41,7 @@ public class MainMenuGUI extends InventoryEffectRenderer {
     Этот метод нужн только для того, чтобы из ClienPrxy вызывать GUI. Потом этот конструктор следут удалить
     */
     public MainMenuGUI() {
-        super(new MainMenuContainer());
+        super(new StatsContainer());
         this.allowUserInput = true;
     }
     

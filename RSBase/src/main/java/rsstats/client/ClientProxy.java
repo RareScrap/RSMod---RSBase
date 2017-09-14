@@ -11,9 +11,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import rsstats.client.gui.MainMenuGUI;
+import rsstats.client.gui.SSPPage;
 import rsstats.common.CommonProxy;
 import rsstats.common.RSStats;
 import rsstats.common.event.KeyHandler;
+import rsstats.data.ExtendedPlayer;
 
 /**
  *
@@ -25,15 +27,22 @@ public class ClientProxy extends CommonProxy {
         if (world instanceof WorldClient) {
             switch (ID) {
                 case RSStats.GUI: return new MainMenuGUI();
+                /*
+                ВНИМАНИЕ! По туториалу, мне не нужно делать проверку в строке 25.
+                Более того, мне нужно свитч затолкать в CommonProxy. Но так как
+                у меня все работает и при таком раскладе, я пока оставлю все как есть
+                */
+                case RSStats.SSP_UI_CODE: return new SSPPage(player, player.inventory, ExtendedPlayer.get(player).statsInventory);
             }
         }
         return null;
     }
     
+    // Кей-хандлеры должны регистрироваться только на клиенте
     @Override
-	public void registerKeyBindings() {
-            keyHandler = new KeyHandler();
-            FMLCommonHandler.instance().bus().register(keyHandler);
-            MinecraftForge.EVENT_BUS.register(new MainMenuGUI());
-	}
+    public void registerKeyBindings() {
+        keyHandler = new KeyHandler();
+        FMLCommonHandler.instance().bus().register(keyHandler);
+        MinecraftForge.EVENT_BUS.register(new MainMenuGUI());
+    }
 }
