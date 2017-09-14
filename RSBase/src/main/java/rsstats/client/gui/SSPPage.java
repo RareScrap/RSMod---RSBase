@@ -7,11 +7,13 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import rsstats.inventory.StatsInventory;
 import rsstats.inventory.container.StatsContainer;
+import rsstats.inventory.slots.StatSlot;
 
 /**
  * UI инвентаря статов, скиллов и перков
@@ -81,7 +83,7 @@ public class SSPPage extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glScalef(2.0F, 2.0F, 1.0F);
+        //GL11.glScalef(2.0F, 2.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(background);
         
         this.xSize = 340/2;
@@ -91,6 +93,26 @@ public class SSPPage extends GuiContainer {
         int l = this.guiTop/2 - ySize/4;
         
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+        
+        
+        /*for (int i = 0; i < statsInventory.getSizeInventory(); i++) {
+            StatSlot slot = statsInventory.
+            if (slot.getHasStack() && slot.getSlotStackLimit()==1) {
+            	this.drawTexturedModalRect(k+slot.xDisplayPosition, l+slot.yDisplayPosition, 200, 0, 16, 16);
+            }
+        }*/
+        
+        // думаю, что это рендер предметов в инвентаре
+        for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)
+        {
+            Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);
+            if (slot.getHasStack() && slot.getSlotStackLimit()==1)
+            {
+            	this.drawTexturedModalRect(k+slot.xDisplayPosition, l+slot.yDisplayPosition, 200, 0, 16, 16);
+            }
+        }
+        
+        
         
         // ЭТО ИЗ ТУТОРА
         /*GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

@@ -21,13 +21,17 @@ public class StatsContainer extends Container {
     
     public StatsContainer(EntityPlayer player, InventoryPlayer inventoryPlayer, StatsInventory statsInventory) {
         System.out.print("StatsContainer(...)\n");
-        int i;
+        //int i;
         
         // Player Inventory, Slot 9-35, Slot IDs 9-35
         for (int y = 0; y < 3; ++y) {
             for (int x = 0; x < 9; ++x) {
                 this.addSlotToContainer(new StatSlot(inventoryPlayer, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
             }
+        }
+        
+        for (int i = 0, slotIndex = 0; i < statsInventory.getSizeInventory(); ++i, slotIndex++) {
+            this.addSlotToContainer(new StatSlot(statsInventory, slotIndex, i*9, 0));
         }
 
         // Add CUSTOM slots - we'll just add two for now, both of the same type.

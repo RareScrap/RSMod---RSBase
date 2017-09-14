@@ -8,54 +8,10 @@
 :compileApiJava UP-TO-DATE
 :processApiResources UP-TO-DATE
 :apiClasses UP-TO-DATE
-:sourceMainJava
-:compileJavawarning: [options] bootstrap class path not set in conjunction with -source 1.6
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\client\ClientProxy.java:31: error: unmappable character for encoding Cp1251
-                ВН�?МАН�?Е! По туториалу, мне не нужно делать проверку в строке 25.
-                     ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\client\ClientProxy.java:31: error: unmappable character for encoding Cp1251
-                ВН�?МАН�?Е! По туториалу, мне не нужно делать проверку в строке 25.
-                             ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\client\gui\SSPPage.java:95: error: unmappable character for encoding Cp1251
-        // ЭТО �?З ТУТОРА
-                   ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\common\CommonProxy.java:44: error: unmappable character for encoding Cp1251
-        // КОП�?ПАСТ �?З ТУТОРА. ХЗ насчет работоспособности
-                  ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\common\CommonProxy.java:44: error: unmappable character for encoding Cp1251
-        // КОП�?ПАСТ �?З ТУТОРА. ХЗ насчет работоспособности
-                             ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\common\RSStats.java:23: error: unmappable character for encoding Cp1251
-    /** �?мя мода */
-         ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\data\ExtendedPlayer.java:26: error: unmappable character for encoding Cp1251
-    /** �?нвентарь для статов */
-         ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\inventory\StatsInventory.java:53: error: unmappable character for encoding Cp1251
-     * @param slotIndex �?ндекс слота в инвенторе, из которого нужно получить предмет
-                         ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\inventory\StatsInventory.java:103: error: unmappable character for encoding Cp1251
-     * @return �?мя инвентаря
-                ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\inventory\StatsInventory.java:151: error: unmappable character for encoding Cp1251
-     * �?нвентарь может использоваться игроком?
-        ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\inventory\StatsInventory.java:174: error: unmappable character for encoding Cp1251
-     * @return �?тог проверки: возвращает true, если предмет можно поместить в инвентарь.
-                ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\inventory\StatsInventory.java:175: error: unmappable character for encoding Cp1251
-     * �?наче - false.
-        ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\inventory\slots\StatSlot.java:30: error: unmappable character for encoding Cp1251
-     * @return �?тог проверки: возвращает true, если предмет можно поместить в инвентарь.
-                ^
-D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats\inventory\slots\StatSlot.java:31: error: unmappable character for encoding Cp1251
-     * �?наче - false.
-        ^
-1 warning
-
+:sourceMainJava UP-TO-DATE
+:compileJava UP-TO-DATE
 :processResources UP-TO-DATE
-:classes
+:classes UP-TO-DATE
 :jar
 :compileTestJava UP-TO-DATE
 :processTestResources UP-TO-DATE
@@ -72,4 +28,4 @@ D:\Users\rares\Downloads\Mods\Minecraft\RSSMod\RSBase\build\sources\java\rsstats
 
 BUILD SUCCESSFUL
 
-Total time: 27.158 secs
+Total time: 13.229 secs
