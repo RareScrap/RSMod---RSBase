@@ -46,7 +46,7 @@ public class CommonProxy {
         
         System.out.print("PIZDA " + dices.size());
         
-        // Инициализация предметод склиллов
+        // Инициализация предметов склиллов
         SkillItem equitationSkillItem = new SkillItem(dices, "EquitationSkillItem", "rsstats:skills/Equitation", "item.EquitationSkillItem", agilityStatItem);
         SkillItem lockpickingSkillItem = new SkillItem(dices, "LockpickingSkillItem", "rsstats:skills/Lockpicking", "item.LockpickingSkillItem", agilityStatItem);
         SkillItem drivingSkillItem = new SkillItem(dices, "DrivingSkillItem", "rsstats:skills/Driving", "item.DrivingSkillItem", agilityStatItem);
@@ -93,7 +93,6 @@ public class CommonProxy {
         GameRegistry.registerItem(intimidationSkillItem, "IntimidationSkillItem");
         GameRegistry.registerItem(diplomacySkillItem, "DiplomacySkillItem");
         GameRegistry.registerItem(climbingSkillItem, "ClimbingSkillItem");
-        
     }
     
     public void preInit(FMLPreInitializationEvent e) {

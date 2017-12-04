@@ -97,7 +97,9 @@ public class StatItem extends Item {
         
         // Дополнительная информация по кнопке Shift
         if (GuiScreen.isShiftKeyDown()) {
-            list.add( StatCollector.translateToLocal(localePrefix + ".descriprion") );
+            String[] str = DescriptionCutter.cut(4, StatCollector.translateToLocal(localePrefix + ".descriprion"));
+            for (int i = 0; i < str.length; i++)
+                list.add( str[i] );
         } else {
             list.add( StatCollector.translateToLocal(generalPrefix + ".moreInfo") );
         }

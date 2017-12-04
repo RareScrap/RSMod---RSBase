@@ -20,6 +20,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import ru.rarescrap.network.packets.RollPacketToServer;
 import ru.rarescrap.rsstats.RSStats;
+import ru.rarescrap.rsstats.utils.DescriptionCutter;
 import ru.rarescrap.rsstats.utils.DiceRoll;
 
 /**
@@ -52,24 +53,7 @@ public class SkillItem extends StatItem {
      */
     @Override
     public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
-        // Уровень навыка
-        int skillLevel = itemstack.getItemDamage(); // Нумерация с нуля
-        
-        // Строка "Уровень X"
-        list.add(StatCollector.translateToLocalFormatted( generalPrefix + ".level", skillLevel) );
-        
-        // Строка броска (пример: "Бросок: d6+1")
-        list.add(StatCollector.translateToLocal(generalPrefix + ".roll") + ": d" + basicRolls.get(skillLevel).getDice());
-        
-        // Пустая строка-разделитель
-        list.add(""); 
-        
-        // Дополнительная информация по кнопке Shift
-        if (GuiScreen.isShiftKeyDown()) {
-            list.add( StatCollector.translateToLocal(localePrefix + ".descriprion") );
-        } else {
-            list.add( StatCollector.translateToLocal(generalPrefix + ".moreInfo") );
-        }
+        super.addInformation(itemstack, player, list, par4);
     }
     
     /**
