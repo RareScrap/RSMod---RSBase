@@ -2,12 +2,6 @@ package ru.rarescrap.rsstats.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import net.minecraft.client.gui.GuiScreen; // Нужен для зажима Shift при показе описания
 import net.minecraft.client.renderer.texture.IIconRegister; // Регистрация иконок в игре
@@ -22,14 +16,12 @@ import net.minecraft.util.IIcon; // Хранилище иконок
 import net.minecraft.util.StatCollector; // Класс для получения строкиз файла локализации
 import ru.rarescrap.rsstats.utils.DescriptionCutter; // Для обрезки длинных предложений
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import org.apache.commons.io.FileUtils;
 import ru.rarescrap.network.packets.RollPacketToServer;
+import ru.rarescrap.rsstats.RSStats;
 import static ru.rarescrap.rsstats.RSStats.INSTANCE;
 import ru.rarescrap.rsstats.utils.DiceRoll;
+import ru.rarescrap.rsstats.utils.RollModificator;
 
 /**
  * Предмет, реализующий функции статы
@@ -40,16 +32,16 @@ public class StatItem extends Item {
     private static int NUMBER_OF_LEVELS = 5;
     
     /** Хранилище иконов для каждого уровня статы */
-    public IIcon[] icons = new IIcon[NUMBER_OF_LEVELS]; // хранилище иконок для всего семейства предмета
+    private IIcon[] icons = new IIcon[NUMBER_OF_LEVELS]; // хранилище иконок для всего семейства предмета
     /** Набор разных дайсов. Порядковый номер в списке обозачает уровень статы,
      * для которой будет использован дайс. */
-    public ArrayList<DiceRoll> basicRolls;
+    protected ArrayList<DiceRoll> basicRolls;
     /** Префикс, используемый игрой для нахождеия текстур мода */
-    private final String registerIconPrefix; // "rarescrap:StrenghtIcon_" например
+    protected final String registerIconPrefix; // "rarescrap:StrenghtIcon_" например
     /** Префикс, используемый игрой для нахождеия файлов локализации мода */
-    private final String localePrefix; // "item.StrenghtStatItem" например
+    protected final String localePrefix; // "item.StrenghtStatItem" например
     /** Префикс, одинаковый для всех статов */
-    private final String generalPrefix = "item.StatItem";
+    protected final String generalPrefix = "item.StatItem";
     
     /**
      * Конструктор, инициализирующий свои поля
@@ -73,6 +65,15 @@ public class StatItem extends Item {
         this.setHasSubtypes(true);
     }
 
+    // Создание вкладок для режима креатива
+    // TODO: Локализировать строки
+    /*public static final CreativeTabs statsTab = new CreativeTabs(RSStats.MODNAME + " Stats") {
+        @Override
+        public Item getTabIconItem() {
+            return Items.
+        }
+    };*/
+    
     /**
      * Добавляет к предмету пояснение.
      * @param itemstack TODO: Добавить Javadoc
@@ -133,6 +134,7 @@ public class StatItem extends Item {
      * @return True, если предмету нужно включить анимацию зачарования. Иначе - false.
      */
     @SideOnly(Side.CLIENT)
+    @Override
     public boolean hasEffect(ItemStack par1ItemStack) {
          //par1ItemStack.setTagInfo("ench", new NBTTagList());
          if (par1ItemStack.getItemDamage() == NUMBER_OF_LEVELS-1)
@@ -163,14 +165,7 @@ public class StatItem extends Item {
     public String getUnlocalizedName(ItemStack stack) {
         return this.getUnlocalizedName();
         //return this.getUnlocalizedName() + "_" + (Integer.valueOf( stack.getItemDamage() ) + 1); - пригодится когда каждому подтипу нужно дать индивидуальное имя
-    }
-    
-    // Тестовый сценарий
-    @SideOnly(Side.SERVER)
-    public String roll() {
-        return "Бросок Силы: d6+1 = 6+6+4+1=17";
-    }
-       
+    }  
     
     // Работает когда юзаешь предмет на панели
     @Override
@@ -184,12 +179,12 @@ public class StatItem extends Item {
             // TODO ХЗ зачем
             //String str = itemstack.getIconIndex().getIconName();
             //str = str.replaceAll("[^\\d.]", "");
-            
+
             DiceRoll roll = new DiceRoll(
                     basicRolls.get(lvl),
                     entityplayer.getDisplayName(),
                     statName,
-                    null // TODO: Получить модификаторы извне
+                    basicRolls.get(lvl).getModificators() // TODO: Получить дополнительные модификаторы извне. Пока сюда передаются только те модификаторы, что были включены при инициализации базовых бросков
             );
             
             //entityplayer.addChatComponentMessage(new ChatComponentText(basicRolls.get(lvl).dice + " " + statName));

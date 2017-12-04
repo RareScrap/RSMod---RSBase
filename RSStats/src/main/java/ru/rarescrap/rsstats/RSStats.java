@@ -7,7 +7,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import java.util.ArrayList;
-import java.util.List;
 
 import ru.rarescrap.rsstats.utils.DiceRoll;
 

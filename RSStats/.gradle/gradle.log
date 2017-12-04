@@ -8,17 +8,10 @@
 :compileApiJava UP-TO-DATE
 :processApiResources UP-TO-DATE
 :apiClasses UP-TO-DATE
-:sourceMainJava
-:compileJavawarning: [options] bootstrap class path not set in conjunction with -source 1.6
-C:\Users\rares\Documents\Public_projects\Mods\Minecraft\RSSMod\RSStats\build\sources\java\ru\rarescrap\rsstats\RSStats.java:20: error: unmappable character for encoding Cp1251
-    public static final String MODNAME = "RSStats"; // �?мя мода
-                                                        ^
-Note: C:\Users\rares\Documents\Public_projects\Mods\Minecraft\RSSMod\RSStats\build\sources\java\ru\rarescrap\rsstats\items\StatItem.java uses unchecked or unsafe operations.
-Note: Recompile with -Xlint:unchecked for details.
-1 warning
-
+:sourceMainJava UP-TO-DATE
+:compileJava UP-TO-DATE
 :processResources UP-TO-DATE
-:classes
+:classes UP-TO-DATE
 :jar
 :compileTestJava UP-TO-DATE
 :processTestResources UP-TO-DATE
@@ -35,4 +28,4 @@ Note: Recompile with -Xlint:unchecked for details.
 
 BUILD SUCCESSFUL
 
-Total time: 6.53 secs
+Total time: 13.094 secs
